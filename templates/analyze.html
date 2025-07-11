@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  {% include 'base.html' %}
+  <meta charset="UTF-8" />
+  <title>მოსავლების გამოთვლა</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    crossorigin="anonymous"
+  />
+  <style>
+    body {
+      background-color: #f0f9f0;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0px 0px;
+      margin: 0;
+    }
+
+    nav.navbar {
+      background-color: #ffffff;
+    }
+
+    nav.navbar a.navbar-brand,
+    nav.navbar .nav-link {
+      color: #333 !important;
+    }
+
+    nav.navbar .nav-link.active {
+      font-weight: bold;
+      color: #198754 !important;
+    }
+
+
+    label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-control, .form-select {
+      background-color: #fefefe;
+      border: 1px solid #ced4da;
+      color: #333;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background-color: #fff;
+      border-color: #198754;
+      box-shadow: 0 0 8px rgba(25, 135, 84, 0.4);
+      color: #000;
+    }
+
+    .btn-success {
+      width: 100%;
+      font-size: 1.25rem;
+      padding: 12px;
+      border-radius: 15px;
+      font-weight: 600;
+    }
+
+    .btn-success:hover {
+      background-color: #157347;
+      border-color: #157347;
+    }
+
+    hr {
+      border-color: #ccc;
+    }
+
+    h4 {
+      color: #198754;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .list-group-item {
+      background-color: #f8f9fa;
+      color: #333;
+      border: 1px solid #dee2e6;
+    }
+
+    .list-group-item.ps-4 {
+      background-color: #e9f7e9;
+    }
+
+    .text-success {
+      color: #28a745 !important;
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+
+<div class="container">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" novalidate>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label for="length">სიგრძე (მეტრი)</label>
+        <input
+          type="number"
+          step="0.01"
+          class="form-control"
+          id="length"
+          name="length"
+          placeholder="მაგ: 10"
+          autocomplete="off"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="width">სიგანე (მეტრი)</label>
+        <input
+          type="number"
+          step="0.01"
+          class="form-control"
+          id="width"
+          name="width"
+          placeholder="მაგ: 5"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="area">ან ფართობი (მ²)</label>
+      <input
+        type="number"
+        step="0.01"
+        class="form-control"
+        id="area"
+        name="area"
+        placeholder="თუ სიგრძე/სიგანე არ იცით"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="crop">აირჩიე კულტურა</label>
+      <select class="form-select" id="crop" name="crop" required>
+        <option disabled selected>აირჩიე...</option>
+        {% if crops %}
+          {% for crop in crops %}
+            <option value="{{ crop }}">{{ crop }}</option>
+          {% endfor %}
+        {% else %}
+          <option disabled>ამ რეგიონში არ მოიძებნა კულტურები</option>
+        {% endif %}
+      </select>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-success btn-lg">გამოთვლა</button>
+    </div>
+
+    {% if result %}
+    <hr />
+    <h4>შედეგები:</h4>
+    <ul class="list-group mb-3">
+      <li class="list-group-item">ფართობი: {{ result.area }} მ²</li>
+      <li class="list-group-item">მოსავალი: {{ result.yield }} კგ</li>
+      <li class="list-group-item">შემოსავალი: {{ result.income }} ₾</li>
+      <li class="list-group-item">
+        ხარჯები:
+        <ul class="list-group mt-2">
+          {% for cost_name, cost_value in result.cost_details.items() %}
+          <li class="list-group-item ps-4">{{ cost_name }}: {{ cost_value }} ₾</li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li class="list-group-item">ხარჯების ჯამი: {{ result.costs }} ₾</li>
+      <li class="list-group-item fw-bold text-success">მოგება: {{ result.profit }} ₾</li>
+    </ul>
+    {% endif %}
+  </form>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+  crossorigin="anonymous">
+</script>
+</body>
+</html>

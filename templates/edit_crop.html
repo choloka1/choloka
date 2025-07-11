@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>კულტურის რედაქტირება</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    {% include 'base.html' %}
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">🌿 კულტურის რედაქტირება</h2>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">დასახელება</label>
+                <input type="text" name="name" value="{{ crop.name }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">რეგიონი</label>
+                <input type="text" name="region" value="{{ crop.region }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">მოსავლიანობა (მ²-ზე)</label>
+                <input type="number" step="0.01" name="yield_per_sqm" value="{{ crop.yield_per_sqm }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">ფასი კგ-ზე</label>
+                <input type="number" step="0.01" name="market_price" value="{{ crop.market_price_per_kg }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">ნერგების ფასი</label>
+                <input type="number" step="0.01" name="cost_seedlings" value="{{ crop.cost_seedlings }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">შრომის ხარჯი</label>
+                <input type="number" step="0.01" name="cost_labor" value="{{ crop.cost_labor }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">სასუქის ხარჯი</label>
+                <input type="number" step="0.01" name="cost_fertilizer" value="{{ crop.cost_fertilizer }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">წყლის ხარჯი</label>
+                <input type="number" step="0.01" name="cost_water" value="{{ crop.cost_water }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">მავნებლების კონტროლი</label>
+                <input type="number" step="0.01" name="cost_pest" value="{{ crop.cost_pest }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">მოვლის ხარჯი</label>
+                <input type="number" step="0.01" name="cost_maintenance" value="{{ crop.cost_maintenance }}" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success">🔄 განახლება</button>
+            <a href="{{ url_for('admin_crops') }}" class="btn btn-secondary ms-2">↩️ უკან</a>
+        </form>
+    </div>
+
+</body>
+</html>
