@@ -299,7 +299,7 @@ def profile():
             flash("გთხოვ, აირჩიე რეგიონი", "danger")
             return redirect(url_for('profile'))
 
-        # ვამოწმებთ პაროლს თუ შეიყვანა
+        # ვამოწმებ პაროლს თუ შეიყვანა
         if new_password:
             if new_password != confirm_password:
                 flash("პაროლები არ ემთხვევა", "danger")
@@ -523,6 +523,8 @@ def register():
         surname = request.form.get('surname')
         email = request.form.get('email')
         password = request.form.get('password')
+        state = request.form.get('state')############################### #egi aris saechvo cota
+        city = request.form.get('city')##############################
         confirm_password = request.form.get('confirm_password')
 
         # გადაამოწმე იმეილი
