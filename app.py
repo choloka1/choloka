@@ -524,8 +524,8 @@ def register():
         surname = request.form.get('surname')
         email = request.form.get('email')
         password = request.form.get('password')
-        state = request.form.get('state')############################### #egi aris saechvo cota
-        city = request.form.get('city')##############################
+        state = request.form.get('state')
+        city = request.form.get('city')
         confirm_password = request.form.get('confirm_password')
 
         # გადაამოწმე იმეილი
@@ -548,7 +548,9 @@ def register():
             'name': name,
             'surname': surname,
             'email': email,
-            'password_hash': hashed_password
+            'password_hash': hashed_password,
+            'state': state,   
+            'city': city      
         }
 
         # ვუგზავნით კოდს
@@ -575,6 +577,7 @@ def register():
             return render_template('register form.html')
 
     return render_template('register form.html')
+
 
 
 @app.route('/archevani', endpoint='archevani')
