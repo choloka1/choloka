@@ -213,8 +213,9 @@ def verify():
                     surname=user_data['surname'],
                     email=user_data['email'],
                     password_hash=user_data['password_hash'],
-                    state=['state'],
-                    city=['city']
+                    state=user_data['state'],  #
+                    city=user_data['city']     #
+
                 )
                 db.session.add(new_user)
                 db.session.commit()
