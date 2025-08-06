@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    {% include 'base.html' %}
+    <meta charset="UTF-8">
+    <title>კულტურის დამატება</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">კულტურის დამატება</h2>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">კულტურის სახელი</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="col-md-6">
+      <label for="region" class="form-label">რაიონი/რეგიონი</label>
+      <select id="region" class="form-select" name="region" required>
+        <option selected disabled>აირჩიეთ...</option>
+        <option>იმერეთი</option>
+        <option>კახეთი</option>
+        <option>სამეგრელო</option>
+        <option>აფხაზეთი</option>
+        <option>გურია</option>
+        <option>სვანეთი</option>
+        <option>რაჭა</option>
+        <option>აჭარა</option>
+        <option>შიდა ქართლი</option>
+        <option>ქვემო ქართლი</option>
+        <option>სამცხე-ჯავახეთი</option>
+      </select>
+    </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="yield_per_sqm" class="form-label">მოსავლიანობა (კგ/მ²)</label>
+                <input type="number" step="0.01" class="form-control" id="yield_per_sqm" name="yield_per_sqm" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="market_price" class="form-label">საბაზრო ფასი (₾/კგ)</label>
+                <input type="number" step="0.01" class="form-control" id="market_price" name="market_price" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_seedlings" class="form-label">ნერგების ფასი</label>
+                <input type="number" step="0.01" class="form-control" id="cost_seedlings" name="cost_seedlings" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_labor" class="form-label">შრომა</label>
+                <input type="number" step="0.01" class="form-control" id="cost_labor" name="cost_labor" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_fertilizer" class="form-label">სასუქი</label>
+                <input type="number" step="0.01" class="form-control" id="cost_fertilizer" name="cost_fertilizer" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_water" class="form-label">წყალი</label>
+                <input type="number" step="0.01" class="form-control" id="cost_water" name="cost_water" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_pest" class="form-label">მავნებლების კონტროლი</label>
+                <input type="number" step="0.01" class="form-control" id="cost_pest" name="cost_pest" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="cost_maintenance" class="form-label">მოვლა და პატრონობა</label>
+                <input type="number" step="0.01" class="form-control" id="cost_maintenance" name="cost_maintenance" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">დამატება</button>
+        <a href="/admin/crops" class="btn btn-secondary">ყველა კულტურა</a>
+        <a href="/admin/users" class="btn btn-secondary">ყველა მომხმარებელი</a>
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ფინანსური რვეული</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>📘 ფინანსური რვეული</h1>
+    <a href="{{ url_for('add') }}">➕ ჩანაწერის დამატება</a>
+    <table>
+        <tr>
+            <th>დღე</th>
+            <th>ტიპი</th>
+            <th>თანხა</th>
+            <th>აღწერა</th>
+            <th>ქმედებები</th>
+        </tr>
+        {% for r in records %}
+        <tr>
+            <td>{{ r.date }}</td>
+            <td>{{ 'ხარჯი' if r.type == 'expense' else 'მოგება' }}</td>
+            <td>{{ r.amount }} ₾</td>
+            <td>{{ r.description }}</td>
+            <td>
+                <a href="{{ url_for('edit', record_id=r.id) }}">✏️</a>
+                <a href="{{ url_for('delete', record_id=r.id) }}" onclick="return confirm('წაშლა?')">❌</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="totals">
+        <p>სულ ხარჯი: <strong>{{ expenses }} ₾</strong></p>
+        <p>სულ მოგება: <strong>{{ incomes }} ₾</strong></p>
+        <p>📊 სალდო (პროფიტი): <strong>{{ balance }} ₾</strong></p>
+    </div>
+</body>
+</html>

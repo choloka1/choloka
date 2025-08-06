@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ადმინის პანელი</title>
+</head>
+<body>
+    <h1>დასამტკიცებელი პროდუქტები</h1>
+    {% for i, product in enumerate(pending) %}
+        <div style="border:1px solid #aaa; margin:10px; padding:10px;">
+            <h3>{{ product.name }}</h3>
+            <img src="{{ url_for('static', filename=product.img) }}" width="150">
+            <p>{{ product.desc }}</p>
+            <p>ფასი: {{ product.price }} ₾</p>
+            <form method="post">
+                <input type="hidden" name="index" value="{{ i }}">
+                <button name="action" value="approve">დამტკიცება</button>
+                <button name="action" value="delete">წაშლა</button>
+            </form>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('home') }}">მთავარზე დაბრუნება</a>
+</body>
+</html>

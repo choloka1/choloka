@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ვიდეო გალერეა</title>
+</head>
+<body>
+    <h1>ხილი</h1>
+{% for video in fruits %}
+    <iframe width="560" height="315"
+            src="{{ video.youtube_url | replace('watch?v=', 'embed/') }}"
+            frameborder="0" allowfullscreen></iframe><br>
+
+    {% if session.get('is_admin') %}
+        <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}">
+            <button type="submit">წაშლა</button>
+        </form>
+    {% endif %}
+    <br><br>
+{% endfor %}
+
+
+   <h1>ბოსტნეული</h1>
+{% for video in fruits %}
+    <iframe width="560" height="315"
+            src="{{ video.youtube_url | replace('watch?v=', 'embed/') }}"
+            frameborder="0" allowfullscreen></iframe><br>
+
+    {% if session.get('is_admin') %}
+        <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}">
+            <button type="submit">წაშლა</button>
+        </form>
+    {% endif %}
+    <br><br>
+{% endfor %}
+
+
+   <h1>ხელსაწყოები</h1>
+{% for video in fruits %}
+    <iframe width="560" height="315"
+            src="{{ video.youtube_url | replace('watch?v=', 'embed/') }}"
+            frameborder="0" allowfullscreen></iframe><br>
+
+    {% if session.get('is_admin') %}
+        <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}">
+            <button type="submit">წაშლა</button>
+        </form>
+    {% endif %}
+    <br><br>
+{% endfor %}
+
+</body>
+</html>
