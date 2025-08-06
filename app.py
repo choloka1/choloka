@@ -25,6 +25,8 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -73,6 +75,15 @@ class Crop(db.Model):
     cost_water = db.Column(db.Float, nullable=False)
     cost_pest = db.Column(db.Float, nullable=False)
     cost_maintenance = db.Column(db.Float, nullable=False)
+
+class Record(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(50))
+    type = db.Column(db.String(10))  # 'expense' ან 'income'
+    amount = db.Column(db.Float)
+    description = db.Column(db.String(100))
+
+
 
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -781,10 +792,44 @@ def view_cart():
     total = sum(item["price"] * item["quantity"] for item in cart_items)
     return render_template("cart.html", cart=cart_items, total=total)
 
-
 @app.route('/home', endpoint='home')
 def home():
-    return render_template('form1.html')
+    return render_template('form1.html')#
+##################################################################################
+@app.route('/board')
+def board():
+    records = Record.query.all()
+    expenses = sum(r.amount for r in records if r.type == 'expense')
+    incomes = sum(r.amount for r in records if r.type == 'income')
+    balance = incomes - expenses
+    return render_template('board.html', records=records, expenses=expenses, incomes=incomes, balance=balance)
+
+@app.route('/add_board', methods=['GET', 'POST'])
+def add_boards():
+    if request.method == 'POST':
+        date = request.form['date']
+        type = request.form['type']
+        amount = float(request.form['amount'])
+        description = request.form['description']
+        new_record = Record(date=date, type=type, amount=amount, description=description)
+        db.session.add(new_record)
+        db.session.commit()
+        return redirect(url_for('board'))
+    return render_template('form_board.html')
+
+@app.route('/edit/<int:record_id>', methods=['GET', 'POST'])
+def edit(record_id):
+    record = Record.query.get_or_404(record_id)
+    if request.method == 'POST':
+        record.date = request.form['date']
+        record.type = request.form['type']
+        record.amount = float(request.form['amount'])
+        record.description = request.form['description']
+        db.session.commit()
+        return redirect(url_for('board'))
+    return render_template('form_board.html', record=record)
+
+
 
 
 if __name__ == '__main__':
